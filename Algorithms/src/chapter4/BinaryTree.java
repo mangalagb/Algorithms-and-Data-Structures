@@ -39,9 +39,6 @@ public class BinaryTree
 		node4.right = node6;
 		
 		return root;
-				
-		
-		
 	}
 	
 	public void preOrder(TreeNode root)
@@ -71,6 +68,28 @@ public class BinaryTree
 		printLeafNodes(node.left);
 		printLeafNodes(node.right);
 	}
+	
+	/**
+	 * Change a tree so that the roles of the left and right pointers are swapped at every node.
+	 * So, Inorder 12345 becomes 54321 in Inorder
+	 * @param node
+	 */
+	public void mirror(TreeNode node) {
+		TreeNode newLeft = null;
+		TreeNode newRight= null;
+		if(node.left != null) {
+			newRight = node.left;
+			mirror(node.left);
+		}
+		if(node.right != null) {
+			newLeft = node.right;
+			mirror(node.right);
+		}
+		
+		node.left = newLeft;
+		node.right = newRight;
+	}
+	
 	public static void main(String[] args)
 	{
 		BinaryTree bin = new BinaryTree();

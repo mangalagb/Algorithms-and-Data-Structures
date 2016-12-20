@@ -20,6 +20,16 @@ class Question2
 		
 	}
 	
+	public char[] reverseInPlace(String str) {
+		char[] targetString = str.toCharArray();
+		for(int i=0, j=targetString.length-1; i<targetString.length/2; i++, j--) {
+			char temp = targetString[i];
+			targetString[i] = targetString[j];
+			targetString[j] = temp;
+		}
+		return targetString;
+	}
+	
 	public void anotherReverse(String str)
 	{
 		System.out.println("Original : "+str);
@@ -47,6 +57,12 @@ class Question2
 	{
 		Question2 q = new Question2();
 		//q.reverse("hello");
-		q.anotherReverse("he");
+		//q.anotherReverse("he\n");
+		
+		char[] result = q.reverseInPlace("hello");
+		
+		for(char c : result) {
+			System.out.print(c + "\t");
+		}
 	}
 }

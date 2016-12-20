@@ -27,7 +27,7 @@ class Question1
 	public static void main(String[] args)
 	{
 		Question1 q = new Question1();
-		if(q.unique("abc") ==true)
+		if(q.unique("abca") ==true)
 		System.out.println("It contains unique characters");
 		
 		else
