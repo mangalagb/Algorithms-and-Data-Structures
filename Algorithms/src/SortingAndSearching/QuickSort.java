@@ -46,7 +46,7 @@ public class QuickSort{
 
 	public static void main(String[] args){
 		QuickSort quickSort = new QuickSort();
-		int[] numbers = {9, 14, 1};
+		int[] numbers = {19,8,10,1};
 		quickSort.printArray(numbers, "Before");
 		quickSort.partition(numbers, 0, numbers.length -1);
 		quickSort.printArray(numbers, "Quicksort");
