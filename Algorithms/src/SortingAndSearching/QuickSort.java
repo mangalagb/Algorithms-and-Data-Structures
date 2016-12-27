@@ -3,16 +3,16 @@ package SortingAndSearching;
 public class QuickSort{
 
 	public void partition(int[] numbers, int low, int high){
-		int pivot = numbers[low + (high - low)/2];
+		int pivotElement = numbers[low + (high - low)/2];
 		int i =  low;
 		int j = high;
 		
 		while(i<= j){
-			while(numbers[i] < pivot){
+			while(numbers[i] < pivotElement){
 				i++;
 			}
 	
-			while(numbers[j] > pivot){
+			while(numbers[j] > pivotElement){
 				j--;
 			}
 	

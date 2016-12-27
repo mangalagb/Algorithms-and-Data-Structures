@@ -11,7 +11,7 @@ public class KnapSack{
 				if(i==0 || w==0){
 					K[i][w] = 0;
 				}
-				///If current item's weight is less tha the cumulative weight,
+				///If current item's weight is less than the cumulative weight,
 				else if(weights[i-1] <= w){
 					K[i][w] = max(costs[i-1] + K[i-1][w - weights[i-1]], K[i-1][w]);
 				}else{

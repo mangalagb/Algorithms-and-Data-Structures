@@ -122,15 +122,15 @@ public class LinkedList {
 		l.addToEnd(2);
 		l.displayLinkedList();
 		
-		l.addToIndex(11, 1);
-		l.displayLinkedList();
-		
-		l.removeNodeAtIndex(3);
-		l.displayLinkedList();
-
-		System.out.println(l.getDataAtIndex(0));
-		
-		System.out.println("\n\nSize = " + l.getListCount());
+//		l.addToIndex(11, 1);
+//		l.displayLinkedList();
+//		
+//		l.removeNodeAtIndex(3);
+//		l.displayLinkedList();
+//
+//		System.out.println(l.getDataAtIndex(0));
+//		
+//		System.out.println("\n\nSize = " + l.getListCount());
 		
 		
 	}

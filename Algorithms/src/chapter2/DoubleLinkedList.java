@@ -1,192 +1,134 @@
 package chapter2;
 
-public class DoubleLinkedList
-{
-	private Node first;
-	private Node last;
-	private int listCount;
+public class DoubleLinkedList{
+	public class Node{
+		int data;
+		Node previous;
+		Node next;
+		
+		public Node(int i) {
+			data = i;
+			previous = null;
+			next = null;
+		}
+		
+		public void displayNode() {
+			System.out.print(data + "\t");
+		}
+	}
 	
-	public DoubleLinkedList()
-	{
+	Node first;
+	Node last;
+	int count;
+	
+	public DoubleLinkedList() {
 		first = null;
 		last = null;
-		listCount = 0;
+		count = 0;
 	}
 	
-	public boolean isEmpty()
-	{
-		return first == null;
-	}
-	
-	public void insertFirst(Object o)
-	{
-		Node newNode = new Node(o);
-		
-		if(isEmpty())
-			last = newNode;
-		else
-			{	first.previous = newNode;
-				newNode.next = first;		}
-		
-		first = newNode;
-		listCount++;
-	}
-	
-	public void insertLast(Object i)
-	{
+	public void insertFirst(int i) {
 		Node newNode = new Node(i);
-		
-		if(isEmpty())
-			first = newNode;
-		else
-		{
-			last.next = newNode;
-			newNode.previous = last;
-		}
-		last = newNode;
-		listCount++;
-	}
-	
-	public boolean insertAfter(Object key, Object i)
-	{
-		Node newNode = new Node(i);
-		
 		Node current = first;
 		
-		while(current.data != key)
-		{
-			current = current.next;
-			if(current == null)
-			{
-				return false;
+		if(current == null) {
+			first = newNode;
+			last = newNode;
+			count++;
+		}else {
+			newNode.next = current;
+			current.previous = newNode;
+			first = newNode;
+			++count;
+		}
+	}
+	
+	public void insertLast(int i) {
+		Node newNode = new Node(i);
+		Node current = last;
+		
+		if(current == null) {
+			first = newNode;
+			last = newNode;
+			++count;
+		}else {
+			newNode.previous = last;
+			last.next = newNode;
+			last = newNode;
+			count++;
+		}
+	}
+	
+	public int insertAtIndex(int index, int data) {
+		Node newNode = new Node(data);
+		Node current = first;
+		
+		if(index > count) {
+			System.out.print("Error. No such index\n");
+			return -1;
+		}
+		
+		//Insert first
+		if(index == 0) {
+			if(first != null) {
+				first.previous = newNode;
+				newNode.next = first;
+				first= newNode;
+			}else {
+				first = newNode;
+				last =  newNode;
+			}
+			++count;
+			return 0;
+		}
+		
+		for(int i=0; i<index; i++) {
+			if(current.next != null) {
+				current = current.next;
+			}else {
+				System.out.print("Error. No such index\n");
+				return -1;
 			}
 		}
 		
-		if(current == last)
-		{
-			newNode.next = null;
+		if(current == last) {
+			newNode.previous = last;
+			last.next = newNode;
 			last = newNode;
+			count++;
+		}else {
+			Node previous = current.previous;
+			previous.next = newNode;
+			newNode.previous = previous;
+			newNode.next = current;
+			current.previous = newNode;
+			++count;
 		}
-		else
-		{
-			newNode.next = current.next;
-			current.next.previous = newNode;
-		}
-		
-		newNode.previous = current;
-		current.next = newNode;
-		listCount++;
-		return true;
+		return 0;
 	}
 	
-	public Node deleteFirst()
-	{
-		Node temp = first;
-		
-		if(first.next == null)
-			last = null;
-		else
-			first.next.previous = null;
-		
-		first = first.next;
-		listCount--;
-		return temp;
-	}
-	
-	public Node deleteLast()
-	{
-		Node temp = last;
-		
-		if(last.previous == null)
-			first = null;
-		else
-			last.previous.next = null;
-		
-		last = last.previous;
-		listCount--;
-		return temp;
-	}
-	
-	public Node deleteKey(Object key)
-	{
+	public void display() {
 		Node current = first;
-		
-		while(current.data != key)
-		{
-			current = current.next;
-			if(current == null)
-				return null;
-		}
-		
-		if(current == first)
-			first = current.next;
-		else
-			current.previous.next = current.next;
-		
-		if(current == last)
-			last = current.previous;
-		else
-			current.next.previous = current.previous;
-		
-		listCount--;
-		return current;
-	}
-	
-	public void displayList()
-	{
-		Node current = first;
-		
-		while(current != null)
-		{
+		while(current != null) {
 			current.displayNode();
 			current = current.next;
 		}
-		System.out.println("\n-------------------------------------\n");
+		System.out.print("\n____________________________________\n");
 	}
 	
-	public static void main(String[] args)
-	{
-		DoubleLinkedList dl = new DoubleLinkedList();
-		dl.insertFirst(5);
-		dl.insertFirst(3);
-		dl.insertFirst(2);
-		dl.displayList();
+	public static void main(String[] args) {
+		DoubleLinkedList list = new DoubleLinkedList();
+		list.insertFirst(3);
+		list.insertFirst(2);
+		list.insertFirst(1);
+		//list.display();
 		
-		dl.insertLast(4);
-		dl.insertLast(12);
-		dl.displayList();
+		list.insertLast(8);
+		//list.insertLast(7);
+		//list.insertLast(6);
+		list.display();
 		
-		dl.deleteFirst();
-		dl.displayList();
-		
-		dl.deleteLast();
-		dl.displayList();
-		
-		dl.insertAfter(5, 10);
-		dl.displayList();
-		
-		dl.insertAfter(4, 6);
-		dl.displayList();
-		
-		dl.deleteKey(10);
-		dl.displayList();
-		
-	}
-}
-
-class Node
-{
-	Node previous;
-	Node next;
-	Object data;
-	
-	public Node(Object o)
-	{
-		data = o;
-	}
-	
-	public void displayNode()
-	{
-		System.out.print(data+"\t");
+		list.insertAtIndex(1, 9);
+		list.display();
 	}
 }
