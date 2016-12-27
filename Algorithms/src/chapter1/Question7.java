@@ -3,98 +3,93 @@
  */
 package chapter1;
 
-class Question7
-{
-	public void initializeMatrix()
-	{
-		
-		int[][] array = new int[][] {
-				{1,1,1},
-				{1,1,0}
-				};
-				
-				
-		
-		printArray(array);
-		setNumbers(array);
-		
+public class Question7 {
+	
+	public void printMatrix(int[][] matrix) {
+		int rowLength = matrix.length;
+		int colLength = matrix[0].length;
+		for (int i = 0; i < rowLength; i++) {
+			for (int j = 0; j < colLength; j++) {
+				System.out.print(matrix[i][j] + "\t");
+			}
+			System.out.print('\n');
+		}
+		System.out.print("_______________________________________________\n");
 	}
 	
-	public void setNumbers(int[][] array)
-	{
-		
-		int[][] positions = new int[array.length*array[0].length][2];
-		
-		for(int i=0; i<positions.length;i++)
-		{
-			for(int j=0;j<positions[0].length;j++)
-			{
-				positions[i][j] =-1;
+	public int[][] createMatrix(int row, int col) {
+		int counter = 1;
+		int[][] matrix = new int[row][col];
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				if(i==1 && j==1 || i==1 && j==2){
+					matrix[i][j] = 0;
+				}else{
+				matrix[i][j] = counter;
+				counter++;
+				}
 			}
 		}
-		int z=0;
+		return matrix;
+	}
+	
+	public void setToZero(int[][] matrix){
+		int row = matrix.length;
+		int col = matrix[0].length;
+		int numberOfitems = row * col;
 		
-		for(int i=0; i<array.length;i++)
-		{
-			for(int j=0;j<array[0].length;j++)
-			{
-				if(array[i][j] ==0)
-				{
-					positions[z][0] =i;
-					positions[z][1] =j;
-					z=z+1;
+		//create an array to store zero positions. For example, Matrix(2,3) is zero.
+		//This array will conatin an entry for each element. Hence size is number of elements.
+		//And second dimension is 2 as we have to store 2 indexes(i and j)
+		int[][] zeroIndexes = new int[numberOfitems][2];
+		int zeroIndexesRow = zeroIndexes.length;
+		int zeroIndexesCol = zeroIndexes[0].length;
+		
+		//Initialize everything to -1
+		for(int i=0; i<zeroIndexesRow; i++){
+			for(int j=0; j<zeroIndexesCol ; j++){
+				zeroIndexes[i][j] = -1;
+			}
+		}
+		
+		//Store zero indexes from the matrix
+		int zeroCounter = 0;
+		for(int i=0;i<row;i++){
+			for(int j=0; j<col; j++){
+				if(matrix[i][j] == 0){
+					zeroIndexes[zeroCounter][0] = i;
+					zeroIndexes[zeroCounter][1] = j;
+					zeroCounter++;
 				}
 			}
 		}
 		
-		for(int i=0; i<positions.length;i++)
-		{
-			for(int j=0;j<positions[0].length;j++)
-			{
-				if(positions[i][j] != -1)
-				{
-					if(j==0)
-					{
-						int row = positions[i][j];
-						for(int w =0; w<array[0].length; w++)
-						{
-							array[row][w] =0;
-						}
-					}
-					else
-					{
-						int col = positions[i][j];
-						for(int w =0; w<array.length; w++)
-						{
-							array[w][col] =0;
+		//Loop through the zero indexes. Then loop through the matrix and set those rows and cols to zero
+		for(int i=0; i<zeroIndexesRow; i++){
+			int[] val = zeroIndexes[i];
+			if(val[0] != -1){
+				int rowNumber = val[0];
+				int colNum = val[1];
+				
+				for(int x=0; x<row;x++){
+					for(int y=0;y<col;y++){
+						if(x== rowNumber || y==colNum){
+							matrix[x][y] = 0;
 						}
 					}
 				}
 			}
 		}
-		
-		printArray(array);
-		
 	}
+
 	
-	public void printArray(int[][] array)
-	{
+	public static void main(String[] args){
+		Question7 question7 = new Question7();
 		
-		for(int i=0; i<array.length;i++)
-		{
-			for(int j=0;j<array[0].length;j++)
-			{
-				System.out.print(array[i][j] +"\t");
-			}
-			System.out.println();
-		}
-		System.out.println("__________________________");
-	}
-	
-	
-	public static void main(String[] args)
-	{
-		Question7 q = new Question7();
-		q.initializeMatrix();
+		int[][] mat = question7.createMatrix(5,5);
+		question7.printMatrix(mat);
+		
+		question7.setToZero(mat);
+		question7.printMatrix(mat);
 	}
 }
