@@ -1,6 +1,6 @@
 package chapter3;
 
-class SimpleStack
+class Stack
 {
 	Node top;
 	
@@ -29,7 +29,7 @@ class SimpleStack
 	
 	public static void main(String[] args)
 	{
-		SimpleStack sta = new SimpleStack();
+		Stack sta = new Stack();
 		sta.push(1);
 		sta.push(2);
 		
