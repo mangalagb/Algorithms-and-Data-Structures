@@ -5,49 +5,69 @@
  */
 package chapter3;
 
-class Question2
-{
+import java.util.ArrayList;
+
+public class Question2{
+	int[] stack;
+	ArrayList<Integer> minList;
 	int top;
-	int maxSize;
-	int min;
-	int[] stackArray;
+	int sizeOfStack;
 	
-	public Question2(int size)
-	{
+	public Question2(int capacity) {
+		stack = new int[capacity];
+		minList = new ArrayList<Integer>();
 		top = -1;
-		maxSize = size;
-		stackArray = new int[maxSize];
+		sizeOfStack = capacity;
 	}
 	
-	public void push(int o)
-	{
-		if(top == -1)
-		{
-			min = o;
-			stackArray[++top] = o;
-		}
-		else
-		{
-			if(o<min)
-				min = o;
-			stackArray[++top] = o;
+	public void push(int data) {
+		if(top < sizeOfStack) {
+			stack[++top] = data;
+			
+			if(minList.isEmpty()) {
+				minList.add(data);
+			}else if(minList.get(0) > data) {
+				minList.add(0, data);
+			}else {
+				minList.add(data);
+			}
 		}
 	}
 	
-	public int returnMin()
-	{
-		return min;
+	public void pop() {
+		if(top == -1) {
+			System.out.print("Empty list");
+			return;
+		}
+		
+		int elementToBeDeleted = stack[top];
+		stack[top] = 0;
+		--top;
+		
+		//Delete the corresponding element in the minimum list
+		int indexInMinList = minList.indexOf(elementToBeDeleted);
+		minList.remove(indexInMinList);
 	}
 	
-	public static void main(String[] args)
-	{
-		Question2 q = new Question2(10);
+	public void display() {
+		for(int i=sizeOfStack -1; i>=0; i--) {
+			if(stack[i] != 0) {
+				System.out.print(stack[i] + "\t");
+			}
+		}
+		System.out.print("\nMinimum  =  " + minList.get(0));
+		System.out.print("\n______________________________\n");
+	}
+	
+	public static void main(String[] args) {
+		Question2 stack = new Question2(4);
+		stack.push(2);		
+		stack.push(3);		
+		stack.push(1);
+		stack.display();
 		
-		q.push(2);
-		q.push(7);
-		q.push(1);
-		
-		System.out.println(q.returnMin());
+		stack.pop();
+		stack.display();
 	}
 	
 }

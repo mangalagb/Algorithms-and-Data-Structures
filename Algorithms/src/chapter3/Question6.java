@@ -1,100 +1,121 @@
-/*
- *Write a program to sort a stack in ascending order. You should not 
- *make any assumptions about how the stack is implemented.
- * The following are the only functions that should be used 
- * to write this program: push | pop | peek | isEmpty.
- */
 package chapter3;
 
 import java.util.ArrayList;
-import java.util.Collections;
+/*
+ *Write a program to sort a stack in ascending order. You should not 
+ * make any assumptions about how the stack is implemented.
+ * The following are the only functions that should be used 
+ * to write this program: push | pop | peek | isEmpty.
+ */
 
-public class Question6 {
-	Node top;
-
+class Question6 {
 	class Node {
 		Node next;
 		int data;
 
-		public Node(int o) {
+		public Node(int data) {
 			this.next = null;
-			this.data = o;
+			this.data = data;
 		}
 	}
+	
+	Node top;
+	
+	public Question6() {
+		top = null;
+	}
 
-	public void push(int o) {
-		Node newNode = new Node(o);
+	public void push(int data) {
+		Node newNode = new Node(data);
+		if(top == null) {
+			top = newNode;
+			return;
+		}
+		
 		newNode.next = top;
 		top = newNode;
-
-	}
-
-	public void storeReverse(Question6 stack1) {
-		while (!isEmpty()) {
-			pop();
-		}
-
-		for (Node x = stack1.top; x != null; x = x.next) {
-			push(x.data);
-		}
 	}
 
 	public int pop() {
-		int item = top.data;
-		top = top.next;
-		return item;
-	}
-
-	public void POP() {
-		// stack2.pop
-	}
-
-	public void PUSH() {
-		// stack1.push
-	}
-
-	public int peek() {
-		if (!isEmpty()) {
+		if (top != null) {
 			int item = top.data;
+			top = top.next;
 			return item;
+		}else {
+			System.out.print("Empty list\n");
+			return -1;
 		}
-		return -1;
-	}
-
-	public void displayStack() {
-
-		String s = "";
-		for (Node x = top; x != null; x = x.next)
-			s += x.data + " ";
-
-		System.out.println(s);
-		System.out.println("______________________________________");
-
 	}
 
 	public boolean isEmpty() {
-		if (top == null)
+		if(top == null) {
 			return true;
-		else
-			return false;
+		}
+		return false;
+	}
+	
+	public void display() {
+		Node current = top;
+		if(current == null) {
+			System.out.print("Empty list\n");
+			return;
+		}
+		
+		while(current != null) {
+			System.out.print(current.data + "\t");
+			current = current.next;
+		}
+		System.out.print("\n_____________________________________________\n");
 	}
 
+	public int peek() {
+		if(top == null) {
+			System.out.print("Empty list");
+			return -1;
+		}	
+		return top.data;
+	}
+	
+	public Question6 sortStack() {
+		ArrayList<Integer> sortedList = new ArrayList<Integer>();
+		while(!isEmpty()) {
+			int item = pop();
+			if(sortedList.isEmpty()) {
+				sortedList.add(item);
+			}else if(sortedList.get(0) > item) {
+				sortedList.add(0, item);
+			}else {
+				
+				int index = -1;
+				for(int i=0; i<sortedList.size(); i++) {
+					if(item < sortedList.get(i)) {
+						index = i;
+						break;
+					}
+				}
+				sortedList.add(index, item);
+			}
+		}
+		
+		Question6 sortedStack = new Question6();
+		for(int i=sortedList.size()-1; i>=0; i--) {
+			sortedStack.push(sortedList.get(i));
+		}
+		
+		return sortedStack;
+	}
+	
 	public static void main(String[] args) {
-		Question6 stack1 = new Question6();
-		Question6 stack2 = new Question6();
-
-		stack1.push(8);
-		stack1.push(4);
-		stack1.push(2);
-		stack1.displayStack();
-
-		stack2.storeReverse(stack1);
-		// stack2.displayStack();
-
-		stack2.pop();
-		stack1.storeReverse(stack2);
-		stack1.displayStack();
-
+		Question6 stack = new Question6();
+		stack.push(6);
+		stack.push(3);
+		stack.push(1);
+		stack.push(2);
+		stack.push(11);
+		stack.display();
+		
+		Question6 sortedStack = stack.sortStack();
+		sortedStack.display();
+		
 	}
-
 }

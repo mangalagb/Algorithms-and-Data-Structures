@@ -12,212 +12,93 @@ Implement a function popAt(int index) which performs a pop operation on a specif
  */
 package chapter3;
 
-class Question3
-{
-	int maxSize;
-	int threshold;
-	int[][] outer;
-	String position = "";
-	int noOfElements;
-	int numberOfStacks;
+public class Question3{
+	private int numberOfStacks = 3;
+	private int sizeOfStack = 2;
+	private int totalNumberOfElements = numberOfStacks * sizeOfStack;
 	
-	public Question3(int n, int thr)
-	{
-		threshold = thr;
-		maxSize = n;
-		noOfElements =0;
-		
-		float no = (float)n/threshold;
-		 numberOfStacks = (int)Math.ceil(no);
-		
-		outer = new int[numberOfStacks][threshold];
-		
-		for(int i=0; i<outer.length;i++)
-		{
-			for(int j=0; j<outer[0].length; j++)
-			{
-				outer[i][j] = 0;
+	int[] stackArray = new int[totalNumberOfElements];
+	
+	//Stack1
+	int top1 = -1;
+	int top1End = top1 + sizeOfStack;
+	int top1Start = top1 + 1;
+	
+	//Stack2
+	int top2 = top1 + sizeOfStack;;
+	int top2End = top2 + sizeOfStack; 
+	int top2Start = top2 + 1;
+	
+	//Stack3
+	int top3 = top2 + sizeOfStack;
+	int top3End = top3 + sizeOfStack; 
+	int top3Start = top3 + 1;
+	
+	public void push(int stackNumber, int data) {
+		if(stackNumber == 1) {
+			if(top1 < top1End) {
+				stackArray[++top1] = data;
+			}else {
+				System.out.print("\nError. Stack 1 is full\n");
+			}			
+		}else if(stackNumber == 2) {
+			if(top2 < top2End) {
+				stackArray[++top2] = data;
+			}else {
+				System.out.print("\nError. Stack 2 is full\n");
+			}
+		}else if(stackNumber == 3) {
+			if(top3 < top3End) {
+				stackArray[++top3] = data;
+			}else {
+				System.out.print("\nError. Stack 3 is full\n");
 			}
 		}
 		
 	}
 	
-	public boolean isEmpty()
-	{
-		boolean myNull=true;
-		
-		for(int i=0; i<outer.length;i++)
-		{
-			for(int j=0; j<outer[0].length; j++)
-			{
-				if(outer[i][j] != 0)
-				{
-					myNull = false;
-					break;
-				}
+	/*
+	 * This is the follow up POP
+	 */
+	public void pop(int stackNumber) {
+		if(stackNumber == 1) {
+			if(top1 >= top1Start) {
+				stackArray[top1] = 0;
+				--top1;
 			}
-		}
-		if(myNull == true)
-			return true;
-		else
-			return false;
-	}
-	
-	public void push(int n)
-	{
-		
-		if(isEmpty())
-		{
-			outer[0][0] = n;
-			position = "00";
-			
-		}
-		else
-		{
-			outerLoop:
-			for(int i=0; i<outer.length;i++)
-			{
-				for(int j=0; j<outer[0].length; j++)
-				{
-					if(outer[i][j] !=0)
-					{
-						continue;
-					}
-					else
-					{
-						outer[i][j] = n;
-						position = Integer.toString(i)+ Integer.toString(j);
-						break outerLoop;
-					}
-				}
+		}else if(stackNumber == 2) {
+			if(top2 >= top2Start) {
+				stackArray[top2] = 0;
+				--top2;
 			}
-			
-			
+		}else if(stackNumber == 3) {
+			if(top3 >= top3Start) {
+				stackArray[top3] = 0;
+				--top3;
+			}
 		}
 	}
 	
-	public void pop()
-	{
-		char c1= position.charAt(0);
-		char c2= position.charAt(1);
-		
-		int i = Character.getNumericValue(c1);
-		int j = Character.getNumericValue(c2);
-		
-		outer[i][j] = 0;
-		
-		if(j==0)
-		{
-			--i;
-			j = outer[0].length-1;
+	public void display() {
+		for(int i=0; i< totalNumberOfElements; i++) {
+			System.out.print(stackArray[i] + "\t");
 		}
-		else
-		{
-			--j;
-		}
-		position = Integer.toString(i)+ Integer.toString(j);
-		
+		System.out.print("\n__________________________________________________________\n");
 	}
 	
-	
-	
-	public void newPop(int index)
-	{	
-		int newIndex = (noOfElements -1) - (index);
+	public static void main(String[] args) {
+		Question3 setOfStacks = new Question3();
+		setOfStacks.push(1, 1);
 		
-		int stackNumber = (newIndex/threshold);		
-		int tempIndex = newIndex -(stackNumber*threshold);
+		setOfStacks.push(2, 3);
+		setOfStacks.push(2, 4);
 		
-		System.out.println("Element popped : "+outer[stackNumber][tempIndex]);
-		System.out.print("\n---------------------------\n");
-		outer[stackNumber][tempIndex]= 0;
-	}
-	
-	public void popAt(int index)
-	{
-		for(int i=0;i<outer.length;i++)
-		{
-			for(int j=0;j<outer[0].length;j++)
-			{
-				System.out.print(outer[i][j]+"\t");
-			}
-		}
-		System.out.print("\n---------------------------\n");
+		setOfStacks.push(3, 8);
 		
-		int newIndex = (noOfElements -1) - (index);
+		setOfStacks.display();
 		
-		int stackNumber = (newIndex/threshold);		
-		int tempIndex = newIndex -(stackNumber*threshold);
-		
-		System.out.println("Element popped : "+outer[stackNumber][tempIndex]);
-		System.out.print("\n---------------------------\n");
-		outer[stackNumber][tempIndex]= 0;
-		
-		// 0 * 1
-		for(int i=0;i<outer.length;i++)
-		{
-			for(int j=0;j<outer[0].length;j++)
-			{
-				System.out.print(outer[i][j]+"\t");
-			}
-		}
-		System.out.print("\n---------------------------\n");
-		
-		for(int i=stackNumber;i<outer.length;i++)
-		{
-			for(int j=tempIndex;j<outer[0].length;j++)
-			{
-				System.out.print(outer[i][j]+"\t");
-			}
-		}
-		System.out.print("\n---------------------------\n");
-
-
-	}
-	
-	public void print()
-	{
-		for(int i=outer.length-1; i>=0;i--)
-		{
-			for(int j=outer[0].length-1; j>=0; j--)
-			{
-				if(outer[i][j] == 0)
-					continue;
-				else
-				{
-					System.out.print(outer[i][j]+"\t");
-					++noOfElements;
-				}
-			}
-			
-		}
-		
-		
-		System.out.print("\n---------------------------\n");
-	}
-	
-	
-	public static void main(String[] args)
-	{
-		Question3 q = new Question3(5,2);
-		q.push(9);
-		q.push(7);
-		q.push(5);
-		q.push(2);
-		q.push(77);
-		
-		//q.pop();
-		
-		q.print();
-		
-//		q.newPop(3);
-//		q.print();
-//		
-		q.popAt(3);
-		
-		
-//		q.push(11);
-//		q.print();
-		//q.print();
+		setOfStacks.pop(1);
+		setOfStacks.pop(2);
+		setOfStacks.display();
 	}
 }
