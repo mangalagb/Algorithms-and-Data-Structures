@@ -1,4 +1,4 @@
-package otherAlgorithms;
+
 
 import java.util.Hashtable;
 

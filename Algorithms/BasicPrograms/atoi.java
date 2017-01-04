@@ -1,4 +1,4 @@
-package otherAlgorithms;
+
 
 class atoi
 {	
