@@ -59,7 +59,7 @@ class DFS_Iterative {
 		}
 
 		adjacencyMatrix.get(0).add(1);
-		adjacencyMatrix.get(0).add(3);
+		//adjacencyMatrix.get(0).add(3);
 
 		adjacencyMatrix.get(1).add(0);
 		adjacencyMatrix.get(1).add(2);

@@ -1,165 +1,131 @@
+package chapter4;
+
 /*
  * Implement a function to check if a tree is balanced. 
  * For the purposes of this question, a balanced 
  * tree is defined to be a tree such that no two leaf 
  * nodes differ in distance from the root by more than one.
+ * 
+ * An empty tree is height-balanced. A non-empty binary tree T is balanced if:
+	1) Left subtree of T is balanced
+	2) Right subtree of T is balanced
+	3) The difference between heights of left subtree and right subtree is not more than 1.
  */
 
-// Binary tree with pre order traversal
-//print all leaf nodes
-
-package chapter4;
-
-import java.util.ArrayList;
-
-public class Question1
-{
-	int maxdepth;
-	boolean balanced;
-	ArrayList<Integer> leafDepth; 
-	
-	public Question1()
-	{
-		maxdepth =0;
-		balanced = true;
-		leafDepth = new ArrayList<Integer>();
-	}
-	
-	class TreeNode
-	{
+public class Question1{
+	public class Node{
+		Node left;
+		Node right;
 		int data;
-		TreeNode left;
-		TreeNode right;
 		
-		public TreeNode(int i)
-		{
-			this.data = i;
+		public Node(int i){
+			data = i;
+			left = null;
+			right = null;
 		}
 	}
 	
-	public TreeNode createBinaryTree()
-	{
-		TreeNode root = new TreeNode(40);
-		
-		TreeNode node1 = new TreeNode(20);
-		TreeNode node2 = new TreeNode(10);
-		TreeNode node3 = new TreeNode(30);
-		
-		TreeNode node4 = new TreeNode(60);
-		TreeNode node5 = new TreeNode(50);
-		TreeNode node6 = new TreeNode(70);
-		
-		TreeNode node7 = new TreeNode(80);
-		TreeNode node8 = new TreeNode(90);
-		
-		root.left = node1;
-		root.right = node4;
-		
-		node1.left = node2;
-		node1.right = node3;
-		
-		node4.left = node5;
-		node4.right = node6;
-		
-		node6.right = node7;
-		node7.right = node8;
-		
-		return root;
-				
-		
-		
+	Node root;
+	public Question1(){
+		root = null;
 	}
 	
-	public void preOrder(TreeNode root)
-	{
-		if(root != null)
-		{
-			System.out.print(root.data+"\t");
-		
-			preOrder(root.left);
-			preOrder(root.right);
+	public void insert(int data){
+		if(root == null){
+			root = new Node(data);
+		}else{
+			insertHelper(root, data);
 		}
-			
 	}
 	
-	public void printBalanced()
-	{
-		System.out.println("\n\nBalanced? = "+balanced);
-		System.out.println("Max Depth = "+maxdepth);
-	}
-	public void prettyPrinting()
-	{
-		System.out.println("\n___________________________________________\n");
-		
-	}
-	
-	public void anotherbalance(TreeNode root, int depth)
-	{
-		if(root!= null)
-		{
-		if(root.left == null && root.right == null)
-		{
-			
-			leafDepth.add(depth);
-		}
-		else
-		{
-		
-			depth++;
-			
-			if(depth > maxdepth)
-				maxdepth = depth;
-			
-			anotherbalance(root.left, depth);
-			anotherbalance(root.right, depth);
-		}
-		}
-		
-	}
-	public void isBalanced(TreeNode root)
-	{
-		anotherbalance(root, 0);
-		
-		for(int i : leafDepth)
-		{
-			for(int j = leafDepth.get(1); j<leafDepth.size()-1; j++)
-			{
-				int k = i-j;
-				if(Math.abs(k) <=1)
-					balanced = true;
-				else
-					balanced = false;
+	private void insertHelper(Node node, int data){
+		if(data <= node.data){
+			if(node.left == null){
+				node.left = new Node(data);
+			}else{
+				insertHelper(node.left, data);
 			}
 		}
 		
-		printBalanced();
-		prettyPrinting();
-		
-	}
-	public void printLeafNodes(TreeNode node)
-	{
-		if(node == null)
-		{
-			return;
+		if(data > node.data){
+			if(node.right == null){
+				node.right = new Node(data);
+			}else{
+				insertHelper(node.right, data);
+			}
 		}
-		
-		if(node.left == null && node.right == null)
-			System.out.print(node.data+"\t");
-		
-		printLeafNodes(node.left);
-		printLeafNodes(node.right);
-	}
-	public static void main(String[] args)
-	{
-		Question1 bin = new Question1();
-		TreeNode root = bin.createBinaryTree();
-		
-		bin.preOrder(root);
-		bin.prettyPrinting();
-		
-		bin.isBalanced(root);
-		
-		
 	}
 	
+	public void displayInOrder(){
+		if(root == null){
+			System.out.println("Empty");
+			return;
+		}else{
+			displayInOrderHelper(root);
+			System.out.print("\n_______________________________________________________________\n");
+		}
+	}
+	
+	private void displayInOrderHelper(Node node){
+		if(node.left != null){
+			displayInOrderHelper(node.left);
+		}
+		System.out.print(node.data + "\t");
+		if(node.right != null){
+			displayInOrderHelper(node.right);
+		}
+	}
+	
+	public boolean isBalanced(){
+		if(root == null){
+			System.out.println("Empty");
+			return false;
+			
+		}else{
+			return isBalancedHelper(root);
+		}
+	}
+	
+	public boolean isBalancedHelper(Node node){
+		if(node == null){
+			return true;
+		}
+		int leftHeight = height(node.left);
+		int rightHeight = height(node.right);
+		Double result = (double) Math.abs(leftHeight - rightHeight);
+		if(result <= 1 && isBalancedHelper(node.left) && isBalancedHelper(node.right)){
+			return true;
+		}
+		return false;
+	}
+	
+	public int height(Node node){
+		if(node == null){
+			return 0;
+		}		
+		return 1 + Math.max(height(node.left), height(node.right));
+	}
+	
+	public static void main(String[] args){
+		Question1 tree1 = new Question1();
+		tree1.insert(10);
+		tree1.insert(9);
+		tree1.insert(8);
+		tree1.insert(15);
+		tree1.insert(14);
+		tree1.insert(13);
+		tree1.insert(19);
+		tree1.displayInOrder();		
+		System.out.println(tree1.isBalanced() + "\n");
+		
+		Question1 tree2 = new Question1();
+		tree2.insert(10);
+		tree2.insert(9);
+		tree2.insert(8);
+		tree2.insert(15);
+		tree2.insert(14);
+		tree2.insert(13);
+		tree2.displayInOrder();		
+		System.out.println(tree2.isBalanced());
+	}
 }
