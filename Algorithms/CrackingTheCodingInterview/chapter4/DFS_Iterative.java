@@ -16,8 +16,7 @@ class DFS_Iterative {
 		this.numberOfNodes = numberOfNodes;
 	}
 
-	public void traverseDfs() {
-		
+	public void traverseDfs() {		
 		Stack<Integer> stack = new Stack<Integer>();
 		stack.push(rootNode);
 		visited[rootNode] = true;
