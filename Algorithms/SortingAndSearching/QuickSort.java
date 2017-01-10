@@ -1,4 +1,15 @@
-
+/*
+ * O(log n) - Means repeatedly dividing by a constant. 
+ * (Think tree. Every time the number of comparisons gets cut by half)
+ * 16 / 2 = 8
+ 	8 / 2 = 4
+ 	4 / 2 = 2
+ 	2 / 2 = 1
+ 	
+ 	How many steps did it take? 4 = log(16) (Base 2)
+ 	
+ 	algo with n! complexity?
+ */
 
 public class QuickSort{
 
@@ -46,7 +57,7 @@ public class QuickSort{
 
 	public static void main(String[] args){
 		QuickSort quickSort = new QuickSort();
-		int[] numbers = {19,8,10,1};
+		int[] numbers = {19,8,2,23,10,1};
 		quickSort.printArray(numbers, "Before");
 		quickSort.partition(numbers, 0, numbers.length -1);
 		quickSort.printArray(numbers, "Quicksort");
