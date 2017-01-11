@@ -1,0 +1,27 @@
+Sorting Algorithms Comparison
+-------------------------------
+
+ - Insertion sort is widely used for small data sets, while for large data sets an asymptotically efficient sort is used, primarily heap sort, merge sort, or quicksort. 
+
+ - Highly tuned implementations use more sophisticated variants, such as Timsort (merge sort, insertion sort, and additional logic), used in Android, Java, and Python, 
+   and introsort (quicksort and heap sort), used (in variant forms) in some C++ sort implementations and in .NET.
+ 	
+ - When physically sorting objects, such as alphabetizing papers (such as tests or books), people intuitively generally use insertion sorts 
+   for small sets. For larger sets, people often first bucket, such as by initial letter, and multiple bucketing allows practical sorting of 
+   very large sets. Often space is relatively cheap, such as by spreading objects out on the floor or over a large area, but operations are expensive, 
+   particularly moving an object a large distance – locality of reference is important. Merge sorts are also practical for physical objects, 
+   particularly as two hands can be used, one for each list to merge, while other algorithms, such as heap sort or quick sort, are poorly suited for human use.
+   
+ - When the size of the array to be sorted approaches or exceeds the available primary memory, so that (much slower) disk or swap space must be employed, 
+   the memory usage pattern of a sorting algorithm becomes important, and an algorithm that might have been fairly efficient when the array fit easily in 
+   RAM may become impractical. In this scenario, the total number of comparisons becomes (relatively) less important, and the number of times sections of 
+   memory must be copied or swapped to and from the disk can dominate the performance characteristics of an algorithm.
+   
+  - For example, the popular recursive quicksort algorithm provides quite reasonable performance with adequate RAM, but due to the recursive way that it 
+    copies portions of the array it becomes much less practical when the array does not fit in RAM, because it may cause a number of slow copy or
+    move operations to and from disk. In that scenario, another algorithm may be preferable even if it requires more total comparisons.
+    
+  - Another technique for overcoming the memory-size problem is using external sorting, for example one of the ways is to combine two algorithms
+    in a way that takes advantage of the strength of each to improve overall performance. For instance, the array might be subdivided into
+    chunks of a size that will fit in RAM, the contents of each chunk sorted using an efficient algorithm (such as quicksort), and the results
+    merged using a k-way merge similar to that used in mergesort. This is faster than performing either mergesort or quicksort over the entire list.
