@@ -50,7 +50,7 @@ class BST
 			}
 		}
 		
-		if(value < node.data)
+		if(value <= node.data)
 		{
 			if(node.left != null)
 			{
