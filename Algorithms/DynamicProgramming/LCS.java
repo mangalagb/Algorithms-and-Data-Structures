@@ -1,4 +1,4 @@
-package DynamicProgramming;
+
 public class LCS {
 
 	public int[][] findLCS(char[] X, char[] Y, int m, int n) {

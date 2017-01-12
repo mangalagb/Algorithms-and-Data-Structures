@@ -1,4 +1,4 @@
-package MatrixManipulations;
+
 public class SimpleMatrixPrinting {
 	
 	/*

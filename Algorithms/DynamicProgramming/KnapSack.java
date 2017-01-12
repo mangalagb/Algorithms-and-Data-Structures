@@ -1,4 +1,4 @@
-package DynamicProgramming;
+
 public class KnapSack{
 	
 	//See http://www.geeksforgeeks.org/dynamic-programming-set-10-0-1-knapsack-problem/
