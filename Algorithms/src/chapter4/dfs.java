@@ -5,7 +5,7 @@ import java.util.Stack;
 
 class dfs
 {	
-	ArrayList<ArrayList<Integer>> adj ;
+	ArrayList<ArrayList<Integer>> adj;
 	boolean[] visited;
 	int rootNode;
 	int numberOfNodes;
