@@ -1,3 +1,4 @@
+package BasicPrograms;
 /*
  * The numbers 0-9 are consecutive in the Ascii character set. A character is just an 8-bit value.
  * The characters '0', '1', '2'... have values 48, 49, 50... so subtracting 0 from a digit character gives its integer value.

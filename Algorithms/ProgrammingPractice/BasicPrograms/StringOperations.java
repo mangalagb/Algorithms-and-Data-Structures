@@ -1,3 +1,4 @@
+package BasicPrograms;
 import java.util.Arrays;
 import java.util.HashMap;
 
