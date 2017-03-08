@@ -1,137 +1,159 @@
 package chapter2;
 
-public class LinkedList {
-	private Node head;
-	private int listCount;
-	
-	public LinkedList() {
-		head = new Node(null);
-		listCount = 0;
-	}
-	
-	private class Node {
+class LinkedList{
+	public class Node{
 		Node next;
-		Object data;
-
-		public Node(Object i) {
+		int data;
+		
+		public Node(int i){
+			data = i;
 			next = null;
-			data = i;
 		}
-
-		public Object getData() {
-			return data;
-		}
-
-		public void setData(Object i) {
-			data = i;
-		}
-
-		public Node getNext() {
-			return next;
-		}
-
-		public void setNext(Node n) {
-			next = n;
-		}
-
-	}
-
-	public int getListCount() {
-		return listCount;
-	}
-
-	public void addToEnd(Object data)
-	{
-		Node temp = new Node(data);
-		Node current = head;
-		
-		while(current.getNext() != null)
-		{
-			current = current.getNext();
-		}
-		
-		current.setNext(temp);
-		listCount++;
 	}
 	
-	public void displayLinkedList() {
-		Node current = head.getNext();
-		
-		while(current != null)
-		{
-			System.out.print(current.getData()+"\t");
-			current = current.getNext();
-		}
-		System.out.println("\n____________________________");
-	}
-
-	public void addToIndex(Object data, int index)
-	{
-		Node temp = new Node(data);
-		Node current = head;
-		
-		for(int i=0; i<index && current.getNext() != null; i++)
-		{
-			current = current.getNext();
-		}
-		
-		temp.setNext(current.getNext());
-		current.setNext(temp);
-		listCount++;
+	Node head;
+	int count;
+	
+	public LinkedList(){
+		head = null;
+		count = 0;
 	}
 	
-	public Object getDataAtIndex(int index)
-	{
-		Node current = head.getNext();
-		
-		if(index < 0)
+	public void insert(int data){
+		if(head == null){
+			head = new Node(data);
+		}else{
+			Node current = head;
+			Node newNode = new Node(data);
+			while(current.next != null){
+				current = current.next;
+			}
+			current.next = newNode;
+		}
+		count++;
+	}
+	
+	public void insertFirst(int data){
+		if(head == null){
+			head = new Node(data);
+		}else{
+			Node newNode = new Node(data);
+			newNode.next = head;
+			head = newNode;
+		}
+		count++;
+	}
+	
+	public int insertAtIndex(int index, int data){
+		Node newNode = new Node(data);
+		if(index == 0){
+			if(head == null){
+				head = newNode;
+			}else{
+				newNode.next = head;
+				head = newNode;
+			}
+			count++;
+			return 0;
+		}else if(index > count){
+			System.out.println("No such index");
+			return -1;
+		}else{
+			Node current = head;
+			for(int i=0;i<index-1;i++){
+				if(current == null){
+					System.out.println("No such index");
+					return -1;
+				}
+				current = current.next;
+			}
+			newNode.next = current.next;
+			current.next = newNode;
+			count++;
+			return 0;
+		}
+	}
+	
+	public int getDataAtIndex(int index){
+		if(head == null){
+			System.out.println("Empty list");
+			return -1;
+		}else if(index >= count ){
+			System.out.println("No such index");
+			return -1;
+		}else{
+			Node current = head;
+			for(int i=0; i<index;i++){
+				if(current == null){
+					System.out.println("No such index");
+					return -1;
+				}
+				current = current.next;
+			}
+			return current.data;
+		}
+	}
+
+	public Node removeNodeAtIndex(int index){
+		if(head == null){
+			System.out.println("Empty list");
 			return null;
-		
-		for(int i=0;i<index;i++)
-		{
-			if(current.getNext() == null)
-				return null;
-			
-			current = current.getNext();
+		}else if(index >= count ){
+			System.out.println("No such index");
+			return null;
+		}else if(index == 0 && (head.next == null || count==1)){
+			Node nodeToBeReturned = head;
+			head = null;
+			return nodeToBeReturned;
+		}else{
+			Node current = head;
+			for(int i=0; i<index-1;i++){
+				if(current == null){
+					System.out.println("No such index");
+					return null;
+				}
+				current = current.next;
+			}
+			Node nodeToBeReturned = current.next;
+			current.next = current.next.next;
+			return nodeToBeReturned;
 		}
+	}
 		
-		return(current.getData());
+	public void display(){
+		if(head == null){
+			System.out.println("Empty list");
+		}else{
+			Node current = head;
+			System.out.print(current.data + "\t");
+			while(current.next != null){
+				current = current.next;
+				System.out.print(current.data + "\t");
+			}
+			System.out.println("\n________________________________________\n");
+		}
 	}
 	
-	public boolean removeNodeAtIndex(int index)
-	{
-		Node current = head;
+	public int getListCount() {
+		return count;
+	}
+	
+	public static void main(String[] args){
+		LinkedList list = new LinkedList();
+		list.insert(1);
+		list.insert(2);
+		list.insert(3);
+		list.insertFirst(19);
+		list.insertAtIndex(0, 23);
+		list.display();
 		
-		for(int i =0; i<index; i++)
-		{
-			if(current.getNext() == null)
-				return false;
-			
-			current = current.getNext();
+		System.out.println(list.getDataAtIndex(2));
+		
+		Node deletedNode = list.removeNodeAtIndex(3);
+		if(deletedNode != null){
+			System.out.println(deletedNode.data);
 		}
 		
-		current.setNext(current.getNext().getNext());
-		listCount--;
-		return true;
-	}
-	public static void main(String[] args) {
-		LinkedList l = new LinkedList();
-
-		l.addToEnd(9);
-		l.addToEnd(5);
-		l.addToEnd(2);
-		l.displayLinkedList();
-		
-//		l.addToIndex(11, 1);
-//		l.displayLinkedList();
-//		
-//		l.removeNodeAtIndex(3);
-//		l.displayLinkedList();
-//
-//		System.out.println(l.getDataAtIndex(0));
-//		
-//		System.out.println("\n\nSize = " + l.getListCount());
-		
-		
+		list.display();
 	}
 }
