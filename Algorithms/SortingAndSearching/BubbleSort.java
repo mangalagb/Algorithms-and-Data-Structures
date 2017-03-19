@@ -28,6 +28,22 @@ public class BubbleSort {
 		printArray(numbers, "BubbleSort");
 	}
 	
+	public void bubbleSortEasy(int[] numbers, int size){
+		boolean isSwapped = true;
+		while(isSwapped){
+			isSwapped = false;
+			for(int i=1;i<size;i++){
+				if(numbers[i-1] > numbers[i]){
+					int temp = numbers[i];
+					numbers[i] = numbers[i-1];
+					numbers[i-1] = temp;
+					isSwapped = true;
+				}
+			}
+		}
+		printArray(numbers, "BubbleSort");
+	}
+	
 	public void printArray(int[] numbers, String method){
 		System.out.print(method + " :\t");
 		for(int number : numbers){
@@ -40,6 +56,7 @@ public class BubbleSort {
 		BubbleSort bubble = new BubbleSort();
 		int[] numbers =  {19,8,2,23,10,1};
 		bubble.printArray(numbers, "Before");
-		bubble.bubbleSort(numbers, numbers.length);
+		//bubble.bubbleSort(numbers, numbers.length);
+		bubble.bubbleSortEasy(numbers, numbers.length);
 	}
 }

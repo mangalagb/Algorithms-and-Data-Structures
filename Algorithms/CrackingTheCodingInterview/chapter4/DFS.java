@@ -32,12 +32,12 @@ public class DFS{
 		adjacencyMatrix.get(1).add(2);
 
 		adjacencyMatrix.get(2).add(1);
-//		adjacencyMatrix.get(2).add(4);
-//		adjacencyMatrix.get(2).add(5);
-//
-//		adjacencyMatrix.get(4).add(2);
-//
-//		adjacencyMatrix.get(5).add(2);
+		adjacencyMatrix.get(2).add(4);
+		adjacencyMatrix.get(2).add(5);
+
+		adjacencyMatrix.get(4).add(2);
+
+		adjacencyMatrix.get(5).add(2);
 
 		adjacencyMatrix.get(3).add(0);			
 	}
@@ -99,7 +99,9 @@ public class DFS{
 			
 			ArrayList<Integer> children = adjacencyMatrix.get(node);
 			for(Integer child : children){
-				DFSRecursiveHelper(child);
+				if(visited[child] != true){
+					DFSRecursiveHelper(child);
+				}
 			}
 		}
 	}
