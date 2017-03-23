@@ -68,34 +68,48 @@ class BST
 		System.out.print("\nNumber of nodes in tree : " + count + "\n");
 	}
 	
-	public void maxDepth() {
-		int count = 0;
-		if(root == null) {
-			System.out.print("Max depth  = "+ count);
-		}else {
-			int maxdepth = findMaxDepthRecursively(root, count);
-			System.out.print("\n Max depth : "+ maxdepth + "\n");
+	public void findMinMaxDepth(){
+		if(root == null){
+			System.out.println("Min Depth = 0   Max Depth = 0");
+			return;
+		}else{
+			System.out.println("Min Depth = " + findMinimumDepthHelper(root));
+			System.out.println("Max Depth = " + findMaximumDepthHelper(root));
 		}
 	}
 	
-	private int findMaxDepthRecursively(Node node, int count) {
-		if(node.left == null && node.right == null) {
-			return count;
-		}
-		int leftDepth = count;
-		int rightDepth = count;
-		if(node.left != null) {
-			leftDepth = findMaxDepthRecursively(node.left, ++leftDepth);
-		}
-		if(node.right != null) {
-			rightDepth = findMaxDepthRecursively(node.right, ++rightDepth);
+	private int findMinimumDepthHelper(Node node){
+		
+		if(node.left == null && node.right == null){
+			return 1;
 		}
 		
-		if(leftDepth >= rightDepth) {
-			return leftDepth;
-		}else {
-			return rightDepth;
+		if(node.left == null){
+			return findMinimumDepthHelper(node.right) + 1;
 		}
+		
+		if(node.right == null){
+			return findMinimumDepthHelper(node.left) + 1;
+		}
+		
+		return Math.min(findMinimumDepthHelper(node.left), findMinimumDepthHelper(node.right)) + 1;
+	}
+	
+	private int findMaximumDepthHelper(Node node){
+		
+		if(node.left == null && node.right == null){
+			return 1;
+		}
+		
+		if(node.left == null){
+			return findMinimumDepthHelper(node.right) + 1;
+		}
+		
+		if(node.right == null){
+			return findMinimumDepthHelper(node.left) + 1;
+		}
+		
+		return Math.max(findMinimumDepthHelper(node.left), findMinimumDepthHelper(node.right)) + 1;
 	}
 	
 	public void inOrderHelper(Node node)
@@ -315,6 +329,8 @@ class BST
 		tree.inOrder();
 		
 		tree.findClosest(15);
+		
+		tree.findMinMaxDepth();
 		
 //		tree.getNumberOfNodes();
 //		
