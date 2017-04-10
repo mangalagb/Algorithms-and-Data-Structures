@@ -2,7 +2,7 @@ package chapter1;
 
 import java.util.ArrayList;
 
-class ImplementHashTable {
+class ImplementHashMap {
 	
 	ArrayList<String>[] timetable = new ArrayList[100];
 
@@ -88,7 +88,7 @@ class ImplementHashTable {
 	}
 
 	public static void main(String[] args) {
-		ImplementHashTable h = new ImplementHashTable();
+		ImplementHashMap h = new ImplementHashMap();
 		h.put("gowri", "9");
 		h.put("vineet", "12");
 		h.displayHashTable();
