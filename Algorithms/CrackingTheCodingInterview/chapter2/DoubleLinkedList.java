@@ -94,50 +94,39 @@ public class DoubleLinkedList{
 	}
 	
 	public int insertAtIndex(int index, int data) {
-		Node newNode = new Node(data);
-		Node current = first;
-		
-		if(index > count) {
-			System.out.print("Error. No such index\n");
+		if(index > count){
+			System.out.println("No such index");
 			return -1;
 		}
 		
-		//Insert first
-		if(index == 0) {
-			if(first != null) {
-				first.previous = newNode;
-				newNode.next = first;
-				first= newNode;
-			}else {
+		Node newNode = new Node(data);
+		
+		if(index == 0){
+			if(first == null){
 				first = newNode;
-				last =  newNode;
+				last = newNode;				
+			}else{
+				newNode.next = first;
+				first.previous = newNode;
+				first = newNode;				
 			}
-			++count;
-			return 0;
-		}
-		
-		for(int i=0; i<index; i++) {
-			if(current.next != null) {
+		}else{
+			Node current = first;
+			for(int i=0; i<index; i++){
+				if(current.next == null){
+					System.out.println("No such index");
+					return -1;
+				}
 				current = current.next;
-			}else {
-				System.out.print("Error. No such index\n");
-				return -1;
 			}
-		}
 		
-		if(current == last) {
-			newNode.previous = last;
-			last.next = newNode;
-			last = newNode;
-			count++;
-		}else {
-			Node previous = current.previous;
+			Node previous = current.previous;			
 			previous.next = newNode;
 			newNode.previous = previous;
-			newNode.next = current;
 			current.previous = newNode;
-			++count;
-		}
+			newNode.next = current;			
+		}		
+		count+= 1;
 		return 0;
 	}
 	
@@ -204,5 +193,6 @@ public class DoubleLinkedList{
 		
 		list.insertAfter(3, 7);
 		list.display();
+		
 	}
 }
