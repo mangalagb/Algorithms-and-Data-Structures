@@ -40,6 +40,33 @@ public class Question5 {
 
 		listCount = 5;
 	}
+	
+	public boolean determineLoopAnother(){
+		Item fastpointer = head;
+		Item slowPointer = head;
+		
+		while(true){
+			
+			//Empty list
+			if(head == null){
+				return false;
+			}
+			
+			slowPointer = slowPointer.next;
+			
+			if(slowPointer == null){
+				return false;
+			}
+			
+			slowPointer = slowPointer.next;
+			fastpointer = fastpointer.next.next;
+			
+			if(slowPointer == fastpointer){
+				System.out.println("Loop is : " + slowPointer.data);
+				return true;
+			}
+		}
+	}
 
 	public void determineLoop() {
 		Item loop = head;
@@ -89,6 +116,7 @@ public class Question5 {
 
 		c.newList();
 		c.determineLoop();
+		c.determineLoopAnother();
 	}
 }
 
