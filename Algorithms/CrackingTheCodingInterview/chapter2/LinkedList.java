@@ -33,6 +33,24 @@ class LinkedList{
 		count++;
 	}
 	
+	/*
+	 * Reverse a linked list
+	 */
+	public void reverseIterative(){
+		Node previous = null;
+		Node next = null;
+		Node current = head;
+		
+		while(current != null){
+			next = current.next;
+			current.next = previous;
+			
+			previous = current;
+			current = next;
+		}
+		head = previous;
+	}
+	
 	public void insertFirst(int data){
 		if(head == null){
 			head = new Node(data);
