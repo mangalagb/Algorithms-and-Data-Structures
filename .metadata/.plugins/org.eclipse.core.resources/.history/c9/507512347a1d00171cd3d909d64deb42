@@ -1,0 +1,27 @@
+package callcentre;
+
+public class Fresher extends Employee{
+	
+	boolean free;
+	
+	public Fresher() {
+		free = true;
+	}
+	
+	private void setFree(boolean value) {
+		this.free = value;
+	}
+	
+	public void getCall() throws InterruptedException {
+		if(free) {
+			System.out.print("\nFresher " + name + "recieving call\n");
+			this.free = false;
+			Thread.sleep(1000); 
+		}
+	}
+	
+	public static void main() {
+		Fresher fresher = new Fresher();
+		fresher.printEmployeeDetails();
+	}
+}

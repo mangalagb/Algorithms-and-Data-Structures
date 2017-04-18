@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;jobRelated/src/uniqueCharInString&apos; to &apos;uniqueCharInString.java&apos;" description="Rename resource &apos;uniqueCharInString&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/uniqueCharInString" name="uniqueCharInString.java" stamp="1407795299027" updateReferences="true"/>
+</session>

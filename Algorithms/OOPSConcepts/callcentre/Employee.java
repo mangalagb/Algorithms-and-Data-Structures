@@ -1,26 +1,28 @@
 package callcentre;
 
 public class Employee{
-	String name;
-	int employeeNumber;
 	boolean free;
+	String name;
 	
-	public boolean isFree(){
-		return free;
-	}
-	
-	public void setFree(boolean value){
+	public void setFree(boolean value) {
 		this.free = value;
 	}
 	
-	public void getCall(){
-		//Before handling call, set free to false
-		this.free = false;
-		
-		System.out.println("Fresher handling call");
-		
-		//After handling call, set free to true
-		this.free = true;
+	public boolean isFree() {
+		return this.free;
 	}
 	
+	public void printEmployeeDetails() {
+		System.out.print(name);
+	}
+	
+	public void getCall() throws InterruptedException {
+		if(free) {
+			System.out.print(name + " recieving call.\t");
+			this.free = false;
+			Thread.sleep(1000); 
+			System.out.print("Done recieving call.\n");
+			this.free = true;
+		}
+	}
 }

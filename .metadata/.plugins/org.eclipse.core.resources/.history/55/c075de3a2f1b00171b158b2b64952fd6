@@ -1,0 +1,8 @@
+
+public class SpecialClass {
+	static{
+		System.out.print("Magic!!!!!!!");
+		System.exit(0);
+
+	}
+}
