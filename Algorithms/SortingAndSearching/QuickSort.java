@@ -40,20 +40,33 @@
 
 public class QuickSort{
 
-	public void partition(int[] numbers, int low, int high){
+	public void quicksort(int[] numbers, int low, int high){
+		// Get the pivot element from the middle of the list
 		int pivotElement = numbers[low + (high - low)/2];
+		
 		int i =  low;
 		int j = high;
 		
+		// Divide into two lists
 		while(i<= j){
+			
+			// If the current value from the left list is smaller than the pivot
+            // element then get the next element from the left list
 			while(numbers[i] < pivotElement){
 				i++;
 			}
-	
+			
+			// If the current value from the right list is larger than the pivot
+            // element then get the next element from the right list
 			while(numbers[j] > pivotElement){
 				j--;
 			}
-	
+			
+			// If we have found a value in the left list which is larger than
+            // the pivot element and if we have found a value in the right list
+            // which is smaller than the pivot element then we exchange the
+            // values.
+            // As we are done we can increase i and j
 			if(i<= j){
 				int temp = numbers[i];
 				numbers[i] = numbers[j];
@@ -63,16 +76,15 @@ public class QuickSort{
 			}
 		}
 		
+		// Recursion
 		if(low < j){
-			partition(numbers, low, j);
+			quicksort(numbers, low, j);
 		}
 		
 		if(i < high){
-			partition(numbers, i, high);
+			quicksort(numbers, i, high);
 		}
 	}
-	
-	
 	
 	public void printArray(int[] numbers, String method){
 		System.out.print(method + " :\t");
@@ -86,7 +98,7 @@ public class QuickSort{
 		QuickSort quickSort = new QuickSort();
 		int[] numbers = {19,8,2,23,10,1};
 		quickSort.printArray(numbers, "Before");
-		quickSort.partition(numbers, 0, numbers.length -1);
+		quickSort.quicksort(numbers, 0, numbers.length -1);
 		quickSort.printArray(numbers, "Quicksort");
 	}
 }
