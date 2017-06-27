@@ -27,7 +27,7 @@ Procedure binary_search
 end procedure
 */
 
-public class BinarySearch{
+public class BinarySearchable{
 	
 	public int binarySearch(int[] sortedArray, int target){
 		int low = 0;
@@ -98,7 +98,7 @@ public class BinarySearch{
 	}
 	
 	public static void main(String[] args){
-		BinarySearch binarySearch = new BinarySearch();
+		BinarySearchable binarySearch = new BinarySearchable();
 		
 		//Sort the array first
 		int[] numbers = {19,8,2,23,10,1};

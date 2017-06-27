@@ -1,3 +1,5 @@
+package Easy;
+
 import java.util.Scanner;
 
 class CHN05{
