@@ -15,20 +15,6 @@
 public class BubbleSort {
 	
 	public void bubbleSort(int[] numbers, int size){
-		
-		for(int i=0; i<size; i++){
-			for(int j=1; j< size-i; j++){
-				if(numbers[j-1] > numbers[j]){
-					int temp = numbers[j-1];
-					numbers[j-1] = numbers[j];
-					numbers[j] = temp;
-				}
-			}
-		}
-		printArray(numbers, "BubbleSort");
-	}
-	
-	public void bubbleSortEasy(int[] numbers, int size){
 		boolean isSwapped = true;
 		while(isSwapped){
 			isSwapped = false;
@@ -56,7 +42,6 @@ public class BubbleSort {
 		BubbleSort bubble = new BubbleSort();
 		int[] numbers =  {19,8,2,23,10,1};
 		bubble.printArray(numbers, "Before");
-		//bubble.bubbleSort(numbers, numbers.length);
-		bubble.bubbleSortEasy(numbers, numbers.length);
+		bubble.bubbleSort(numbers, numbers.length);
 	}
 }

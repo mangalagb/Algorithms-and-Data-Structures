@@ -36,6 +36,6 @@ class Question3
 	{
 		Question3 q = new Question3();
 		//q.removeDup("abasdgybgpl");
-		q.removeDup("");
+		q.removeDup("abacd");
 	}
 }

@@ -1,83 +1,79 @@
-/*
- * 1) Merge sort is used when the data structure doesn’t support random access, since it works with pure sequential access (forward iterators, rather than random access iterators). 
- * 	It’s also widely used for external sorting, where random access can be very, very expensive compared to sequential access.
-	For example, When sorting a file which doesn’t fit into memory, you might break it into chunks which fit into memory, 
-	sort these using independently, writing each out to a file, then merge sort the generated files.
-	
-	2) You can use merge sort when you need a stable sort. It’s very important feature of merge sort.
-	
-	3) Mergesort is quicker when dealing with linked lists. This is because pointers can easily be changed when merging lists.
-	  It only requires one pass (O(n)) through the list.
-	  
-	4) If there is a lot of parallelization occurs then parallelizing Mergesort is simpler than other sort algorithms.
- */
-
 public class MergeSort{
-	private int[] numbers;
-	private int[] helper;
 	
-	public MergeSort(int[] array){
-		numbers = array;
-		helper = new int[numbers.length];
-	}
-	
-	public void mergeSort(int low, int high){		
-		 // check if low is smaller then high, if not then the array is sorted
-		if(low < high){
-			int middle = low + (high-low)/2;
-			
-			mergeSort(low, middle);
-			mergeSort(middle+1, high);
-			
-			 //Combine left and right parts
-			merge(low, middle, high);
-		}
-	}
-	
-	public void merge(int low, int middle, int high){
-		// Copy both parts into the helper array
-        for (int i = low; i <= high; i++) {
-                helper[i] = numbers[i];
-        }
-		
-		int i =low;
-		int j = middle +1;
-		int k = low;
-		
-		//If left is less, copy that to helper.
-		//Else, copy right
-		while(i<= middle && j<=high){
-			if(helper[i] < helper[j]){
-				numbers[k] = helper[i];
-				i++;
-			}else{
-				numbers[k] = helper[j];
-				j++;
-			}
-			k++;
-		}
-		
-		// Copy the rest of the left side of the array into the target array
-		while(i <= middle){
-			numbers[k] = helper[i];
-			i++;
-			k++;
-		}		
-	}
-	
-	public void printArray(String method){
-		System.out.print(method + " :\t");
+	public void printArray(int[] numbers){
 		for(int number : numbers){
 			System.out.print(number+"\t");
 		}
 		System.out.print("\n___________________________________________________________\n");
 	}
 	
+	public void mergeSort(int[] numbers, int low, int high){
+		if(low < high){
+			
+			//split the array into 2
+			int mid = low + (high-low)/2;
+			
+			//sort the left and right array
+			mergeSort(numbers, low, mid);
+			mergeSort(numbers, mid + 1, high);
+			
+			//merge the result
+			merge(numbers, low, mid+1, high);
+		}
+	}
+	
+	private void merge(int[] numbers, int leftArrayBegin, int rightArrayBegin, int rightArrayEnd){
+		
+		int leftArrayEnd = rightArrayBegin - 1;
+		int numOfElements = rightArrayEnd - leftArrayBegin + 1;
+		int[] result = new int[numOfElements];
+		int resultCounter = 0;
+		
+		 // Find the smallest element in both these array and add it to the result
+        // If we have a array of the form [1,5] [2,4]
+        // We need to sort the above as [1,2,4,5]
+		while(leftArrayBegin <= leftArrayEnd && rightArrayBegin <= rightArrayEnd){
+			if(numbers[leftArrayBegin] <= numbers[rightArrayBegin]){
+				result[resultCounter] = numbers[leftArrayBegin];
+				resultCounter++;
+				leftArrayBegin++;
+			}else{
+				result[resultCounter] = numbers[rightArrayBegin];
+				resultCounter++;
+				rightArrayBegin++;
+			}
+		}
+		
+		// After the main loop completed we may have few more elements in
+        // left array copy them first
+		while(leftArrayBegin <= leftArrayEnd){
+			result[resultCounter] = numbers[leftArrayBegin];
+			resultCounter++;
+			leftArrayBegin++;
+		}
+		
+		// After the main loop completed we may have few more elements in
+        // right array copy them
+		while(rightArrayBegin <= rightArrayEnd){
+			result[resultCounter] = numbers[rightArrayBegin];
+			resultCounter++;
+			rightArrayBegin++;
+		}
+		
+		 // Copy resultArray back to the main array
+		for (int i = numOfElements-1; i >=0; i--, rightArrayEnd--){
+			numbers[rightArrayEnd] = result[i]; 
+		}
+
+		
+	}
+	
 	public static void main(String[] args){
-		int[] numbers =  {19,8,2,23,10,1};
-		MergeSort mergeSort = new MergeSort(numbers);
-		mergeSort.printArray("Before");
-		mergeSort.mergeSort(0, numbers.length - 1);
-		mergeSort.printArray("After");
+		int[] numbers =  {19,-8,2,23,10,1};
+		MergeSort mergeSort = new MergeSort();
+		
+		mergeSort.printArray(numbers);
+		mergeSort.mergeSort(numbers, 0, numbers.length-1);
+		mergeSort.printArray(numbers);
 	}
 }

@@ -6,22 +6,23 @@
 
 package chapter1;
 
+import java.util.HashSet;
+
 class Question1
 {
-	public boolean unique(String s)
-	{
-		for(int i=0;i<s.length();i++)
-		{
-			for(int j=i+1;j<s.length();j++)
-			{	
-				if(s.charAt(i) == s.charAt(j))
-				{
-					return false;
-				}
+	public boolean isUnique(String stringToTest){
+		HashSet<Character> unique = new HashSet<Character>();
+		for(int i=0;i<stringToTest.length();i++){
+			Character character = stringToTest.charAt(i);
+			if(unique.contains(character)){
+				return false;
 			}
+			unique.add(character);
 		}
-		return true;
-		
+		if(unique.size() == stringToTest.length()){
+			return true;
+		}
+		return false;
 	}
 	
 	public void reverse(char[] string)
@@ -32,13 +33,13 @@ class Question1
 			string[i] = string[j];
 			string[j] = current;
 		}
-		System.out.println(string + "\n");
+		System.out.println(string.toString() + "\n");
 	}
 	
 	public static void main(String[] args)
 	{
 		Question1 q = new Question1();
-		if(q.unique("hello") ==true)
+		if(q.isUnique("hello") ==true)
 		System.out.println("It contains unique characters");
 		
 		else
