@@ -1,131 +1,97 @@
 package chapter2;
 
-public class Circular
-{
+public class Circular{
+	public class Node{
+		Node next;
+		int data;
+		boolean isPrinted;
+		
+		public Node(int i){
+			data = i;
+			next = null;
+			isPrinted = false;
+		}
+	}
 	
-	Link head;
-	Link tail;
-	int listCount;
-	
-	public Circular()
-	{
+	Node head;
+	public Circular(){
 		head = null;
-		tail = null;
-		listCount = 0;
 	}
 	
-	public boolean isEmpty()
-	{
-		return head == null;
+	public void initializeList(){
+		Node node1 = new Node(1);
+		Node node2 = new Node(2);
+		Node node3 = new Node(3);
+		Node node4 = new Node(4);
+		Node node5 = new Node(5);
+		Node node6 = new Node(6);
+		Node node7 = new Node(7);
+		Node node8 = new Node(8);
+		
+		head = node1;
+		node1.next = node2;
+		node2.next = node3;
+		node3.next = node4;
+		node4.next = node5;
+		node5.next = node6;
+		node6.next = node7;
+		node7.next = node8;
+		
+		//Loop
+		node8.next = node3;
 	}
 	
-	public void insertFront(Object o)
-	{
-		Link newLink = new Link(o);
-		newLink.next = head;
-		
-		if(isEmpty())
-		{
-			head = newLink;
-			newLink.next = head;
-			tail = newLink;
+	public void display(){
+		Node current = head;
+		while(current != null && current.isPrinted == false){
+			System.out.print(current.data + "\t");
+			current.isPrinted = true;
+			current = current.next;
 		}
-		else
-		{
-			tail.next = newLink;
-			head = newLink;
-		}
-		listCount++;	
+		System.out.print("\n_______________________________________________________________\n");
 	}
 	
-	public void displayList()
-	{
-		Link current = head;
+	public Node detectLoop(){
+		Node slow = head;
+		Node fast = head;
 		
-		if(isEmpty())
-		{
-			System.out.println("Empty list");
-			return;
-		}
-		else if(head.next == head)
-		{
-			System.out.print(head.data+ "->"+current.data+ "\n");
-			return;
-		}
-		
-		else
-		{
-			System.out.print(head.data+" -> ");
-			//current = head.next;
+		while(slow != null && fast!= null && fast.next != null){
+			slow = slow.next;
+			fast = fast.next.next;
 			
-			while(current.next != head)
-			{
-				current = current.next;
-				System.out.print(current.data+" -> ");
-				
+			if(slow == fast){
+				return slow;
 			}
-			System.out.print(head.data);
-			 
 		}
-		System.out.println("\n____________________________\n");
+		return null;
 	}
 	
-    public void display()
-    {
-        System.out.print("\nCircular Singly Linked List = ");
-        Link ptr = head;
-        if (listCount == 0) 
-        {
-            System.out.print("empty\n");
-            return;
-        }
-        if (head.next == head) 
-        {
-            System.out.print(head.data+ "->"+ptr.data+ "\n");
-            return;
-        }
-        System.out.print(head.data+ "->");
-        ptr = head.next;
-        while (ptr.next != head) 
-        {
-            System.out.print(ptr.data+ "->");
-            ptr = ptr.next;
-        }
-        System.out.print(ptr.data+ "->");
-        ptr = ptr.next;
-        System.out.print(ptr.data+ "\n");
-    }
-
-	
-	public static void main(String[] args)
-	{
-		Circular c = new Circular();
-		c.insertFront(4);
-		c.insertFront(9);
-		c.displayList();
-		//c.display();
-	}
-}
-
-class Link
-{
-	Object data;
-	Link next;
-	
-	public Link(Object o)
-	{
-		data = o;
-		//next = null;
+	public Node determineStartingPointOfLoop(Node loopMeetingPoint){
+		Node current = head;
+		while(true){
+			if(current == loopMeetingPoint){
+				return loopMeetingPoint;
+			}
+			loopMeetingPoint = loopMeetingPoint.next;
+			current = current.next;
+		}
 	}
 	
-	public Link(Object o, Link n)
-	{
-		data = o;
-		next = n;
-	}
-	
-	public void displayLink()
-	{
-		System.out.print(data +"  -> ");
+	public static void main(String[] args){
+		Circular circular = new Circular();
+		circular.initializeList();
+		circular.display();
+		
+		Node loopMeetingPoint = circular.detectLoop();
+		if(loopMeetingPoint != null){
+			System.out.println("Contains loop");
+		}else{
+			System.out.println("No loop");
+		}
+		
+		if(loopMeetingPoint != null){
+			Node loopStart = circular.determineStartingPointOfLoop(loopMeetingPoint);
+			System.out.println("\nLoop start : "+ loopStart.data);
+		}
 	}
 }
