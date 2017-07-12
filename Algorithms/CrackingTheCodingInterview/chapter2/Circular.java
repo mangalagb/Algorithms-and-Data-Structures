@@ -6,19 +6,16 @@ public class Circular{
 		int data;
 		boolean isPrinted;
 		
-		public Node(int i){
-			data = i;
+		public Node(int data){
+			this.data = data;
 			next = null;
 			isPrinted = false;
 		}
 	}
 	
-	Node head;
-	public Circular(){
-		head = null;
-	}
+	Node head = null;
 	
-	public void initializeList(){
+	public void createNodes(){
 		Node node1 = new Node(1);
 		Node node2 = new Node(2);
 		Node node3 = new Node(3);
@@ -37,25 +34,37 @@ public class Circular{
 		node6.next = node7;
 		node7.next = node8;
 		
-		//Loop
-		node8.next = node3;
+		//loop
+		node8.next = node1;
 	}
 	
 	public void display(){
 		Node current = head;
-		while(current != null && current.isPrinted == false){
+		if(current == null){
+			System.out.println("Empty");
+			return;
+		}
+		
+		while(current != null && !current.isPrinted == true){
 			System.out.print(current.data + "\t");
 			current.isPrinted = true;
+			current = current.next;			
+		}
+		
+		//clear the visited for next time
+		current = head;
+		while(current != null && current.isPrinted == true){
+			current.isPrinted = false;
 			current = current.next;
 		}
-		System.out.print("\n_______________________________________________________________\n");
+		System.out.println("\n_______________________________________________________________\n");
 	}
 	
 	public Node detectLoop(){
-		Node slow = head;
 		Node fast = head;
+		Node slow = head;
 		
-		while(slow != null && fast!= null && fast.next != null){
+		while(slow != null && fast != null && fast.next != null){
 			slow = slow.next;
 			fast = fast.next.next;
 			
@@ -66,32 +75,77 @@ public class Circular{
 		return null;
 	}
 	
-	public Node determineStartingPointOfLoop(Node loopMeetingPoint){
-		Node current = head;
+	public void findLoopStart(Node loopBegin){
+		Node current  = head;
 		while(true){
-			if(current == loopMeetingPoint){
-				return loopMeetingPoint;
+			if(current == loopBegin){
+				System.out.println("Loop begins at " + current.data);
+				return;
 			}
-			loopMeetingPoint = loopMeetingPoint.next;
 			current = current.next;
+			loopBegin =loopBegin.next;
 		}
+	}
+	
+	public Node delete(int nodeToDeleteData){
+		if(head == null){
+			System.out.println("Empty");
+			return null;
+		}
+		
+		//Assume that you give valid values only
+		Node cur = head;
+		Node prev = null;
+		Node deletedNode = null;
+		
+		while(true){
+			if(cur.data == nodeToDeleteData){
+				break;
+			}
+			prev = cur;
+			cur = cur.next;
+		}
+		
+		deletedNode = cur;
+		if(cur == head){
+			//Check if it is the only node in the list
+			if(cur.next == null){				
+				head = null;
+			}else{
+				//move prev until it reaches the last node.
+				prev = cur;
+				while(prev.next != cur){
+					prev = prev.next;
+				}
+				head = head.next;
+				prev.next = head;
+			}	
+		}else if(cur.next == head){
+			//If current is last node
+			prev.next = head;
+		}else{
+			//Delete middle node
+			Node next = cur.next;
+			prev.next = next;			
+		}
+		deletedNode.next = null;
+		return deletedNode;
 	}
 	
 	public static void main(String[] args){
 		Circular circular = new Circular();
-		circular.initializeList();
+		circular.createNodes();
 		circular.display();
+//		
+//		Node result = circular.detectLoop();
+//		if(result != null){
+//			System.out.println("Loop detected");
+//			circular.findLoopStart(result);
+//		}else{
+//			System.out.println("No Loop");
+//		}
 		
-		Node loopMeetingPoint = circular.detectLoop();
-		if(loopMeetingPoint != null){
-			System.out.println("Contains loop");
-		}else{
-			System.out.println("No loop");
-		}
-		
-		if(loopMeetingPoint != null){
-			Node loopStart = circular.determineStartingPointOfLoop(loopMeetingPoint);
-			System.out.println("\nLoop start : "+ loopStart.data);
-		}
+		circular.delete(8);
+		circular.display();		
 	}
 }
