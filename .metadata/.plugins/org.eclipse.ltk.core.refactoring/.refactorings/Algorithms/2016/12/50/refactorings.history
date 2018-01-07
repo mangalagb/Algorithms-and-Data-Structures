@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename local variable &apos;difference&apos; in &apos;chapter4.BST.findClosestHelper(...)&apos; to &apos;parentDifference&apos;&#x0A;- Original project: &apos;Algorithms&apos;&#x0A;- Original element: &apos;chapter4.BST.findClosestHelper(Node, Node, int, int).difference&apos;&#x0A;- Renamed element: &apos;difference&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;difference&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;chapter4{BST.java[BST~findClosestHelper~QNode;~QNode;~I~I@difference!5786!5799!5790!5799!I!0!true" name="parentDifference" references="true" stamp="1481409373194" version="1.0"/>
-</session>
