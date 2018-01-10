@@ -6,28 +6,27 @@ public class CoinChange {
 	
 	public void coinChange(int amount, int[] coins) {
 		int[] result = new int[amount+1];
-		int[] track = new int[amount+1];
+		int[] track = new int[amount+1];		
 		
-		result[0] = 0;
-		track[0] = -1;
+		int min = -1;
+		int coinSelected = -1;
 		
-		for(int i=1;i<=amount;i++) {
-			result[i] = Integer.MAX_VALUE-1;
-			track[i] = -1;
-		}
-		
-		for(int coin : coins) {
-			for(int amt=1; amt<=amount; amt++) {
+		for(int amt=1; amt<=amount; amt++) {
+			min = Integer.MAX_VALUE ;	
+			coinSelected = -1;
+			
+			for(int coin : coins) {
 				if(coin <= amt) {
-					if(result[amt] < (result[amt-coin] + 1)) {
-						result[amt] = result[amt];
-					}else {
-						result[amt] = result[amt-coin] + 1;
-						track[amt] = coin;
+					if(min > (result[amt-coin] + 1)) {
+						min = result[amt-coin] + 1;
+						coinSelected = coin;
 					}
 				}
 			}
+			result[amt] = min;
+			track[amt] = coinSelected;
 		}
+		
 		System.out.println("\n---------------------------------------------------------------------------------");
 		System.out.println("Minimum number of coins required for " + amount + " dollars = " + result[amount]);
 		System.out.println("The coins are :\t");
