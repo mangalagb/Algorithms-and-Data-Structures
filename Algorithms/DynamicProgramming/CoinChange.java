@@ -5,26 +5,27 @@
 public class CoinChange {
 	
 	public void coinChange(int amount, int[] coins) {
+		
+		//Two arrays. One for storing the number of coins and 
+		//one for storing the denomination value for the answer
 		int[] result = new int[amount+1];
-		int[] track = new int[amount+1];		
+		int[] track = new int[amount+1];	
 		
-		int min = -1;
-		int coinSelected = -1;
+		//Intialize arrays with default values
+		for(int i=1;i<result.length;i++) {
+			result[i] = Integer.MAX_VALUE;
+			track[i] = -1;
+		}
 		
-		for(int amt=1; amt<=amount; amt++) {
-			min = Integer.MAX_VALUE ;	
-			coinSelected = -1;
-			
+		for(int amt=1; amt<=amount; amt++) {			
 			for(int coin : coins) {
 				if(coin <= amt) {
-					if(min > (result[amt-coin] + 1)) {
-						min = result[amt-coin] + 1;
-						coinSelected = coin;
+					if(result[amt] > (result[amt-coin] + 1)) {
+						result[amt] = result[amt-coin] + 1;
+						track[amt] = coin;
 					}
 				}
 			}
-			result[amt] = min;
-			track[amt] = coinSelected;
 		}
 		
 		System.out.println("\n---------------------------------------------------------------------------------");
